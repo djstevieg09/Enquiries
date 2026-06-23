@@ -69,22 +69,22 @@
 <div class="form-container">
     <h2>New Customer Registration</h2>
     
-    <!-- 🟢 Standard form routing that bypasses browser-level blockades -->
-    <form action="https://formsubmit.co" method="POST">
+    <form action="https://web3forms.com" method="POST">
         
-        <!-- Redirects the user right back to your site after they click submit -->
-        <input type="hidden" name="_next" value="https://github.io">
-        <!-- Disables the annoying captcha confirmation page -->
-        <input type="hidden" name="_captcha" value="false">
+        <!-- Your Verified Access Key from screenshot -->
+        <input type="hidden" name="access_key" value="83958383-e217-4061-be2e-a98bcc63e169">
+        
+        <!-- Redirects back to your site cleanly after submitting -->
+        <input type="hidden" name="redirect" value="https://github.io">
 
         <label for="name">Full Name *</label>
-        <input type="text" name="Full Name" id="name" required placeholder="John Doe">
+        <input type="text" name="name" id="name" required placeholder="John Doe">
 
         <label for="phone">Telephone Number *</label>
-        <input type="tel" name="Phone Number" id="phone" required placeholder="e.g. +44 7123 456789">
+        <input type="tel" name="phone" id="phone" required placeholder="e.g. +44 7123 456789">
 
         <label for="package">Package Interested In *</label>
-        <select name="Selected Package" id="package" required>
+        <select name="package" id="package" required>
             <option value="" disabled selected>-- Choose a package --</option>
             <option value="1 Connection">1 Connection</option>
             <option value="2 Connections">2 Connections</option>
@@ -94,7 +94,7 @@
         </select>
 
         <label for="referral">Referral Code (Optional)</label>
-        <input type="text" name="Referral Code" id="referral" placeholder="e.g. REF123">
+        <input type="text" name="referral_code" id="referral" placeholder="e.g. REF123">
 
         <button type="submit">Submit Details</button>
     </form>
