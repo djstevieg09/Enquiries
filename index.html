@@ -96,7 +96,6 @@
 document.getElementById('customerForm').addEventListener('submit', function(e) {
     e.preventDefault(); 
 
-    // Live active tokens provided by user
     const botToken = "8917564630:AAHKvGgHffp_fmx9OxQXJLf1juJHBVFqKOo"; 
     const chatId = "5077921091"; 
 
@@ -105,22 +104,23 @@ document.getElementById('customerForm').addEventListener('submit', function(e) {
     const selectedPackage = document.getElementById('package').value;
     const referral = document.getElementById('referral').value || "None Provided";
 
-    // Clean text presentation matching markdown specifications
-    const message = `🚨 *New Customer Submission* 🚨\n\n` +
-                    `👤 *Name:* ${name}\n` +
-                    `📞 *Phone:* ${phone}\n` +
-                    `📦 *Package:* ${selectedPackage}\n` +
-                    `🎟️ *Referral Code:* ${referral}`;
+    const message = `🚨 New Customer Submission 🚨\n\n` +
+                    `👤 Name: ${name}\n` +
+                    `📞 Phone: ${phone}\n` +
+                    `📦 Package: ${selectedPackage}\n` +
+                    `🎟️ Referral Code: ${referral}`;
 
     const url = `https://telegram.org{botToken}/sendMessage`;
 
+    // Standardized JSON post method to satisfy Telegram API security parameters
     fetch(url, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+            'Content-Type': 'application/json'
+        },
         body: JSON.stringify({
             chat_id: chatId,
-            text: message,
-            parse_mode: 'Markdown' 
+            text: message
         })
     })
     .then(response => {
@@ -128,12 +128,12 @@ document.getElementById('customerForm').addEventListener('submit', function(e) {
             alert('Details submitted successfully!');
             document.getElementById('customerForm').reset(); 
         } else {
-            alert('Submission failed. Check bot authorization.');
+            alert('Error: Bot authorization issue. Make sure you sent /start to your bot in Telegram first!');
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('An unexpected error occurred.');
+        alert('An network error occurred. Please try again.');
     });
 });
 </script>
