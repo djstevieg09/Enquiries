@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Customer Registration</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: #eef2f3; 
+            padding: 40px 20px; 
+            margin: 0;
+        }
+        .form-container { 
+            max-width: 450px; 
+            background: white; 
+            padding: 30px; 
+            margin: 0 auto; 
+            border-radius: 12px; 
+            box-shadow: 0 8px 24px rgba(0,0,0,0.05); 
+        }
+        h2 { 
+            text-align: center; 
+            color: #2c3e50; 
+            margin-top: 0;
+            margin-bottom: 25px; 
+            font-size: 24px;
+        }
+        label { 
+            font-weight: 600; 
+            display: block; 
+            margin: 16px 0 6px; 
+            color: #34495e; 
+            font-size: 14px;
+        }
+        input, select { 
+            width: 100%; 
+            padding: 12px; 
+            border: 1px solid #ccc; 
+            border-radius: 6px; 
+            box-sizing: border-box; 
+            font-size: 16px; 
+            transition: border-color 0.2s;
+        }
+        input:focus, select:focus {
+            border-color: #0088cc;
+            outline: none;
+        }
+        button { 
+            width: 100%; 
+            background: #0088cc; 
+            color: white; 
+            border: none; 
+            padding: 14px; 
+            margin-top: 25px; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-size: 16px; 
+            font-weight: bold; 
+            transition: background 0.2s;
+        }
+        button:hover { 
+            background: #0077b5; 
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>New Customer Registration</h2>
+    <form id="customerForm">
+        <label for="name">Full Name *</label>
+        <input type="text" id="name" required placeholder="John Doe">
+
+        <label for="phone">Telephone Number *</label>
+        <input type="tel" id="phone" required placeholder="e.g. +44 7123 456789">
+
+        <label for="package">Package Interested In *</label>
+        <select id="package" required>
+            <option value="" disabled selected>-- Choose a package --</option>
+            <option value="1 Connection">1 Connection</option>
+            <option value="2 Connections">2 Connections</option>
+            <option value="3 Connections">3 Connections</option>
+            <option value="4 Connections">4 Connections</option>
+            <option value="Spotify Premium">Spotify Premium</option>
+        </select>
+
+        <label for="referral">Referral Code (Optional)</label>
+        <input type="text" id="referral" placeholder="e.g. REF123">
+
+        <button type="submit">Submit Details</button>
+    </form>
+</div>
+
+<script>
+document.getElementById('customerForm').addEventListener('submit', function(e) {
+    e.preventDefault(); 
+
+    // Live active tokens provided by user
+    const botToken = "8917564630:AAHKvGgHffp_fmx9OxQXJLf1juJHBVFqKOo"; 
+    const chatId = "5077921091"; 
+
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
+    const selectedPackage = document.getElementById('package').value;
+    const referral = document.getElementById('referral').value || "None Provided";
+
+    // Clean text presentation matching markdown specifications
+    const message = `🚨 *New Customer Submission* 🚨\n\n` +
+                    `👤 *Name:* ${name}\n` +
+                    `📞 *Phone:* ${phone}\n` +
+                    `📦 *Package:* ${selectedPackage}\n` +
+                    `🎟️ *Referral Code:* ${referral}`;
+
+    const url = `https://telegram.org{botToken}/sendMessage`;
+
+    fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            chat_id: chatId,
+            text: message,
+            parse_mode: 'Markdown' 
+        })
+    })
+    .then(response => {
+        if (response.ok) {
+            alert('Details submitted successfully!');
+            document.getElementById('customerForm').reset(); 
+        } else {
+            alert('Submission failed. Check bot authorization.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An unexpected error occurred.');
+    });
+});
+</script>
+
+</body>
+</html>
