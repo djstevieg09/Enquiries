@@ -68,15 +68,23 @@
 
 <div class="form-container">
     <h2>New Customer Registration</h2>
-    <form id="customerForm">
+    
+    <!-- 🟢 Standard form routing that bypasses browser-level blockades -->
+    <form action="https://formsubmit.co" method="POST">
+        
+        <!-- Redirects the user right back to your site after they click submit -->
+        <input type="hidden" name="_next" value="https://github.io">
+        <!-- Disables the annoying captcha confirmation page -->
+        <input type="hidden" name="_captcha" value="false">
+
         <label for="name">Full Name *</label>
-        <input type="text" id="name" required placeholder="John Doe">
+        <input type="text" name="Full Name" id="name" required placeholder="John Doe">
 
         <label for="phone">Telephone Number *</label>
-        <input type="tel" id="phone" required placeholder="e.g. +44 7123 456789">
+        <input type="tel" name="Phone Number" id="phone" required placeholder="e.g. +44 7123 456789">
 
         <label for="package">Package Interested In *</label>
-        <select id="package" required>
+        <select name="Selected Package" id="package" required>
             <option value="" disabled selected>-- Choose a package --</option>
             <option value="1 Connection">1 Connection</option>
             <option value="2 Connections">2 Connections</option>
@@ -86,57 +94,11 @@
         </select>
 
         <label for="referral">Referral Code (Optional)</label>
-        <input type="text" id="referral" placeholder="e.g. REF123">
+        <input type="text" name="Referral Code" id="referral" placeholder="e.g. REF123">
 
         <button type="submit">Submit Details</button>
     </form>
 </div>
-
-<script>
-document.getElementById('customerForm').addEventListener('submit', function(e) {
-    e.preventDefault(); 
-
-    const botToken = "8917564630:AAHKvGgHffp_fmx9OxQXJLf1juJHBVFqKOo"; 
-    const chatId = "5077921091"; 
-
-    const name = document.getElementById('name').value;
-    const phone = document.getElementById('phone').value;
-    const selectedPackage = document.getElementById('package').value;
-    const referral = document.getElementById('referral').value || "None Provided";
-
-    const message = `🚨 New Customer Submission 🚨\n\n` +
-                    `👤 Name: ${name}\n` +
-                    `📞 Phone: ${phone}\n` +
-                    `📦 Package: ${selectedPackage}\n` +
-                    `🎟️ Referral Code: ${referral}`;
-
-    const url = `https://telegram.org{botToken}/sendMessage`;
-
-    // Standardized JSON post method to satisfy Telegram API security parameters
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            chat_id: chatId,
-            text: message
-        })
-    })
-    .then(response => {
-        if (response.ok) {
-            alert('Details submitted successfully!');
-            document.getElementById('customerForm').reset(); 
-        } else {
-            alert('Error: Bot authorization issue. Make sure you sent /start to your bot in Telegram first!');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('An network error occurred. Please try again.');
-    });
-});
-</script>
 
 </body>
 </html>
